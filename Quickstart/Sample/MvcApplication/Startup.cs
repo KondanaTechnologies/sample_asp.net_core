@@ -20,10 +20,10 @@ namespace MvcApplication
         public void Configuration(IAppBuilder app)
         {
             // Configure Auth0 parameters
-            string auth0Domain = ConfigurationManager.AppSettings["auth0:Domain"];
-            string auth0ClientId = ConfigurationManager.AppSettings["auth0:ClientId"];
-            string auth0RedirectUri = ConfigurationManager.AppSettings["auth0:RedirectUri"];
-            string auth0PostLogoutRedirectUri = ConfigurationManager.AppSettings["auth0:PostLogoutRedirectUri"];
+            string auth0Domain = ConfigurationManager.AppSettings["Domain"];
+            string auth0ClientId = ConfigurationManager.AppSettings["ClientId"];
+            string auth0RedirectUri = ConfigurationManager.AppSettings["RedirectUri"];
+            string auth0PostLogoutRedirectUri = ConfigurationManager.AppSettings["PostLogoutRedirectUri"];
 
             // Set Cookies as default authentication type
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
