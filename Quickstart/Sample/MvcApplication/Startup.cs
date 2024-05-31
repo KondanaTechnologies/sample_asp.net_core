@@ -22,6 +22,7 @@ namespace MvcApplication
             // Configure Auth0 parameters
             string auth0Domain = ConfigurationManager.AppSettings["Domain"];
             string auth0ClientId = ConfigurationManager.AppSettings["ClientId"];
+            string auth0ClientSecret = ConfigurationManager.AppSettings["ClientSecret"];
             string auth0RedirectUri = ConfigurationManager.AppSettings["RedirectUri"];
             string auth0PostLogoutRedirectUri = ConfigurationManager.AppSettings["PostLogoutRedirectUri"];
 
@@ -45,7 +46,7 @@ namespace MvcApplication
                 Authority = $"{auth0Domain}",
 
                 ClientId = auth0ClientId,
-                ClientSecret = "pTtz7TpAfGEEp4v5BU9luWJu1eRjl4f7",
+                ClientSecret = auth0ClientSecret,
                 RedirectUri = auth0RedirectUri,
                 PostLogoutRedirectUri = auth0PostLogoutRedirectUri,
 
@@ -68,7 +69,7 @@ namespace MvcApplication
                     {
                         if (notification.ProtocolMessage.RequestType == OpenIdConnectRequestType.Logout)
                         {
-                            var logoutUri = $"{auth0Domain}/protocol/openid-connect/logout";
+                            var logoutUri = $"{auth0Domain}/protocol/openid-connect/logout"; //this is the keycloak logout endpoint
 
                             var postLogoutUri = notification.ProtocolMessage.PostLogoutRedirectUri;
                             if (!string.IsNullOrEmpty(postLogoutUri))
@@ -79,7 +80,7 @@ namespace MvcApplication
                                     var request = notification.Request;
                                     postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
                                 }
-                                logoutUri += $"?post_logout_redirect_uri={Uri.EscapeDataString(postLogoutUri)}&client_id={Uri.EscapeDataString(auth0ClientId)}";
+                                logoutUri += $"?post_logout_redirect_uri={Uri.EscapeDataString(postLogoutUri)}&client_id={Uri.EscapeDataString(auth0ClientId)}"; //added redirect parameters
                             }
 
                             notification.Response.Redirect(logoutUri);
